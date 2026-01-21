@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from dotenv import load_dotenv
 from openai import OpenAI
 from supabase import create_client
+from prompts import SYSTEM_PROMPT_ONE,SYSTEM_PROMPT_TWO
 import os
 
 
@@ -11,12 +12,13 @@ load_dotenv()
 
 FIRST_SUPABASE_URL=os.environ.get("FIRST_SUPABASE_URL")
 FIRST_SUPABASE_SERVICE_ROLE_KEY=os.environ.get("FIRST_SUPABASE_SERVICE_ROLE_KEY")
-sam_brain = create_client(FIRST_SUPABASE_UR, FIRST_SERVICE_ROLE_KEY)
+sb2 = create_client(FIRST_SUPABASE_URL, FIRST_SUPABASE_SERVICE_ROLE_KEY)
 
+SECOND_SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SECOND_SUPABASE_SERVICE_ROLE_KEY=os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+sb1 = create_client(SECOND_SUPABASE_URL , SECOND_SUPABASE_SERVICE_ROLE_KEY)
 
-SECONT_SUPABASE_URL= os.environ.get("SECOND_SUPABASE_URL")
-SECOND_SUPABASE_SERVICE_ROLE_KEYSUPABASE_SERVICE_ROLE_KEY=os.environ.get("SECOND_SUPABASE_SERVICE_ROLE_KEY")
-linda_brain = create_client(SECOND_SUPABASE_URL, SECOND_SUPABASE_SERVICE_ROLE_KEY)
+client = OpenAI()
 
 
 
@@ -58,19 +60,14 @@ def embed_query(text: str) -> list[float]:
 # responce ստեղծում է embeddings մոդել և տեքստ փողանցում ինֆորմացիան 
 # վերջում վերադարձ է անում դատան որը որ սկսվում է 0-ից ինդեքսը.
 # takes as input a query, conducts the search, returns context
-def semantic_search(query_text: str) -> list[dict]:
+def semantic_search(query_text, sb) -> list[dict]:
     emb_q = embed_query(query_text)
     res = sb.rpc("match_chunks", {"query_embedding": emb_q, "match_count" : 5}).execute()
     rows = res.data or []
     # for easier debugging
-    print("RAG OUTPUT:", rows)
+   
     return rows
 # semantic_searc ֆունկցիա որը ունի տեքստ պառամետր,  
-res = sb.rpc("match_chunks", {"query_embedding": emb_q, "match_count" : 5}).execute()
-# այս կոդը աշխատում է հետևյալ կերպ սբ մեր օպերացիոն համակարգը ճանաչում է մեր տվյալները rpc հրահանգի միջոցով
-# տրված է match_chunks անվանում  փողանցվել է նաև query_embedding և քանակը որը որ 5 է նշված որը ընդունում է execute ֆունկցիայի միջոցով
-
-
 
 
 
