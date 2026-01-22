@@ -18,7 +18,7 @@ SECOND_SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SECOND_SUPABASE_SERVICE_ROLE_KEY=os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 sb1 = create_client(SECOND_SUPABASE_URL , SECOND_SUPABASE_SERVICE_ROLE_KEY)
 
-client = OpenAI()
+client = OpenAI() 
 
 
 
@@ -37,7 +37,7 @@ SYSTEM_PROMPT_ONE = {
         "just a question-and-answer tool that can help a programmer to some extent. It is not a separate programming profession, because you are simply given code as examples or solutions. The main thing is that you need to **work on the code yourself**, make modifications," "and create your own version in order to truly become a programmer. If you want, I can also make a **shorter, smoother version** that sounds even more natural for a Q&A conversation."
     )
 }
-# SYSTEM_PROMPT_ONE պատրաստում է մեզ համար  California մասնագետ  role և  content համակարգով
+# SYSTEM_PROMPT_ONE պատրաստում է մեզ համար  ծրագրավորման մասնագետ հարց պատասխան  role և  content համակարգով
 # takes in the string and outputs a vector
 
 SYSTEM_PROMPT_TWO = {
@@ -56,7 +56,7 @@ SYSTEM_PROMPT_TWO = {
         "5.If I only learn vibe coding, can I become a programmer, or is that not enough?"
     )
 }
-# SYSTEM_PROMPT_TWO պատրաստում է մեզ համար  health մասնագետ  role և  content համակարգով
+# SYSTEM_PROMPT_TWO պատրաստում է մեզ համար  սկսնակ ծրագրավորող    role և  content համակարգով
 # takes in the string and outputs a vector
 
 

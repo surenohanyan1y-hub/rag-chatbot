@@ -7,25 +7,45 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="app">
-      <header class="header">
-        <h1>Chatbot</h1>
-        <p class="sub">Type a message and get a response.</p>
-      </header>
+      <main class="app">
+        <!-- Header -->
+        <header class="header">
+          <h1>Chatbot</h1>
+          <p class="sub">Type a message and get a response</p>
+        </header>
 
-      <section id="chat" class="chat" aria-live="polite"></section>
+        <!-- Chat messages -->
+        <section
+          id="chat"
+          class="chat"
+          role="log"
+          aria-live="polite"
+          aria-relevant="additions"
+        >
+          <!-- Example messages -->
+          <div class="msg bot">
+            Hello 👋 How can I help you today?
+          </div>
 
-      <form id="form" class="composer" autocomplete="off">
-        <input
-          id="input"
-          type="text"
-          placeholder="Say something…"
-          aria-label="Message"
-          required
-        />
-        <button id="send" type="submit">Send</button>
-      </form>
-    </main>
+git
+        </section>
+
+        <!-- Composer -->
+        <form id="form" class="composer" autocomplete="off">
+          <input
+            id="input"
+            type="text"
+            placeholder="Type your message…"
+            aria-label="Message input"
+            spellcheck="false"
+            required
+          />
+          <button id="send" type="submit" aria-label="Send message">
+            Send
+          </button>
+        </form>
+      </main>
+
 
     <script src="app.js"></script>
   </body>
