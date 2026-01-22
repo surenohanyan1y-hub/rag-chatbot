@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from dotenv import load_dotenv
 from openai import OpenAI
 from supabase import create_client
-from prompts import SYSTEM_PROMPT_ONE,SYSTEM_PROMPT_TWO
+
 import os
 
 
@@ -25,11 +25,16 @@ client = OpenAI()
 SYSTEM_PROMPT_ONE = {
     "role": "system",
     "content": (
-        "You are an expert on all things related to the state of California. "
-        "You have deep knowledge of California history, geography, politics, "
-        "law, culture, climate, universities, technology, and local customs. "
-        "When answering questions, prioritize California-specific context, "
-        "examples, and accuracy."
+        "What is programming and where can I start my career? I'm interested, what advice would you give?"
+        "I restarted my career with Frontend because I wanted to clearly understand what web programming is. \n Since I chose this field, I felt it was important to first understand how UI and UX work. After that, \n "
+        "I plan to move to server-side development. Another reason is that knowing JavaScript helps expand your way of thinking over time. Programming teaches us by making mistakes, especially through code errors, and that process helps us grow as developers."
+        "1. Yes, this is normal, because in the early stages we cannot fully remember and manage our code. Mistakes happen almost all the time, and it is through these mistakes that we learn and grow as developers."
+        "2.  Yes, you are correct. HTML and CSS are not considered programming languages. HTML stands for HyperText Markup Language and is used to create the structure of web pages. \n CSS is a Cascading Style Sheets language that is used to style and design websites. Learning usually starts with HTML because it forms the foundation of web platforms."
+        "3. JavaScript is a dynamic programming language. It is used not only for web platforms but also for building desktop and mobile applications. In many cases, web development starts with JavaScript. It is a flexible language, and its syntax is relatively easy to understand."
+        "Sure! Here’s the English version of what you wrote: Yes, **it helps**, but there is an important point. If we only use **vibe coding**  \n in a question-and-answer format, it doesn’t really count as actual programming. It can provide very useful assistance, such as examples, explanations, and ideas, but the **main thing is to write code on your own**, try solutions in practice, so you can truly develop and become more professional in the programming world.  "
+        "I can also make a **shorter, more concise version** that’s easier to use as a direct answer if you want."
+        "Sure! Here’s the English version of your answer, keeping the meaning clear and natural: Actually, no, that is not enough. **Vibe coding** is \n\n"
+        "just a question-and-answer tool that can help a programmer to some extent. It is not a separate programming profession, because you are simply given code as examples or solutions. The main thing is that you need to **work on the code yourself**, make modifications," "and create your own version in order to truly become a programmer. If you want, I can also make a **shorter, smoother version** that sounds even more natural for a Q&A conversation."
     )
 }
 # SYSTEM_PROMPT_ONE պատրաստում է մեզ համար  California մասնագետ  role և  content համակարգով
@@ -38,9 +43,17 @@ SYSTEM_PROMPT_ONE = {
 SYSTEM_PROMPT_TWO = {
     "role": "system",
     "content": (
-        "You are an expert on all things related to the state of health. "
-        "Be uplifing, helpful, and kind. "
-       
+        "Actually, programming as a professional is a great understanding in my opinion,"
+        "As a beginner, I would recommend starting with web programming, \n\n as it is one of the most popular fields for beginners.  Web programming is divided into two parts:  Frontend and Backend. The frontend developer works on the visible part of the website," 
+        "known as UI and UX, while the backend handles the invisible part, \n such as the server, database, and system logic. This part can be considered the backstage of the website."
+
+        "For a beginner, which is easier to start with, Frontend or Backend, and why? Which one would you recommend?"
+        
+        "1.If your code has errors and, at the beginning, you cannot manage everything properly, is that normal or not?" 
+        "2.I have heard that there are HTML and CSS languages. Are they considered programming languages or not, especially since most courses start by teaching HTML and CSS?"
+        "3.What kind of language is JavaScript, and what is its role in web programming?"
+        "4.I have heard that many people use vibe coding through a question-and-answer approach. Does this actually help programmers or not?"
+        "5.If I only learn vibe coding, can I become a programmer, or is that not enough?"
     )
 }
 # SYSTEM_PROMPT_TWO պատրաստում է մեզ համար  health մասնագետ  role և  content համակարգով
@@ -94,10 +107,13 @@ def run_bot(user_message, system_prompt, sb_client) -> str:
     # call the openai api
     full_user_message = {
         "role": "user",
-        "content": user_message,
+        "content": (user_message),
     }
 
     full_message = [rag_message, full_user_message, system_prompt]
+
+    print(system_prompt)
+
 
     resp = client.responses.create(
         model="gpt-5-nano",
@@ -129,4 +145,5 @@ def simulation():
         output = narek_the_great(output)
         print("NAREK SAYS:" + output)
 
-simulation()
+if __name__ == "__main__":
+    simulation()
